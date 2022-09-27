@@ -7,8 +7,8 @@ import kotlin.test.assertEquals
 
 class K8SDeployPluginTest : GradleRunnerTest("gradleTestProject") {
   @Test
-  fun `can run task`() {
-    val result = runBuildTask("tasks")
+  fun `builds the sample project successfully`() {
+    val result = runBuildTask("build")
 
     assertEquals(result.tasks.first().outcome, TaskOutcome.SUCCESS)
   }
