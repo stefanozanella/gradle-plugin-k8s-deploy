@@ -1,4 +1,4 @@
-package me.stefanozanella.gradle.plugin.k8sdeploy
+package me.stefanozanella.gradle.plugin.k8sdeploy.support
 
 import java.io.File
 import java.net.URL

@@ -1,7 +1,5 @@
 package me.stefanozanella.gradle.plugin.k8sdeploy.support
 
-import me.stefanozanella.gradle.plugin.k8sdeploy.copyTo
-import me.stefanozanella.gradle.plugin.k8sdeploy.resource
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Before
