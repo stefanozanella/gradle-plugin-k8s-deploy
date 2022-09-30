@@ -20,13 +20,23 @@ dependencies {
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
   implementation("me.stefanozanella:kotlin-gradle-little-helpers:0.0.2")
   implementation("com.google.cloud.tools:jib-gradle-plugin:3.3.0")
+  implementation("io.fabric8:kubernetes-client:6.1.1")
+  implementation("org.bouncycastle:bcprov-jdk15on:1.70")
+  implementation("org.bouncycastle:bcpkix-jdk15on:1.70")
+  testImplementation("com.google.cloud.tools:jib-core:0.22.0")
+  testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
+  testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.0")
+  testImplementation("org.testcontainers:testcontainers:1.17.3")
+  testImplementation("org.testcontainers:k3s:1.17.3")
+  testImplementation("org.testcontainers:junit-jupiter:1.17.3")
+  testImplementation("org.assertj:assertj-core:3.23.1")
 }
 
 testing {
   suites {
     @Suppress("UNUSED_VARIABLE")
     val test by getting(JvmTestSuite::class) {
-      useKotlinTest()
+      useJUnitJupiter()
     }
   }
 }

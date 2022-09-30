@@ -1,6 +1,5 @@
 package me.stefanozanella.gradle.plugin.k8sdeploy.support
 
-import java.io.File
 import java.net.URL
 import java.nio.file.*
 import java.nio.file.attribute.BasicFileAttributes
@@ -8,13 +7,13 @@ import java.nio.file.attribute.BasicFileAttributes
 fun resource(path: String) = object {}.javaClass.classLoader.getResource(path)
   ?: throw Exception("Cannot load resource $path")
 
-infix fun URL.copyAllTo(destination: File) = copyAllTo(Path.of(destination.toURI()))
+fun URL.asPath() = Path.of(toURI())
 
-fun URL.copyAllTo(destination: Path) {
+infix fun URL.copyAllTo(destination: Path) {
   if (!Files.isDirectory(destination))
     throw Exception("Cannot copy list of files into a file, please specify a directory")
 
-  val source = Path.of(toURI())
+  val source = asPath()
 
   Files.walkFileTree(source, object : SimpleFileVisitor<Path>() {
     override fun preVisitDirectory(dir: Path, attrs: BasicFileAttributes?): FileVisitResult {
