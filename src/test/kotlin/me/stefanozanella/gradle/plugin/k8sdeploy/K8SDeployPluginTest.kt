@@ -13,38 +13,17 @@ import io.fabric8.kubernetes.client.Config
 import io.fabric8.kubernetes.client.KubernetesClientBuilder
 import me.stefanozanella.gradle.plugin.k8sdeploy.support.K8sAndRegistryCluster
 import me.stefanozanella.gradle.plugin.k8sdeploy.support.asPath
-import me.stefanozanella.gradle.plugin.k8sdeploy.support.copyAllTo
+import me.stefanozanella.gradle.plugin.k8sdeploy.support.extensions.GradleProject
 import me.stefanozanella.gradle.plugin.k8sdeploy.support.resource
 import org.assertj.core.api.Assertions.assertThat
-import org.gradle.testkit.runner.BuildResult
-import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.io.TempDir
-import java.nio.file.Path
+import org.junit.jupiter.api.extension.RegisterExtension
 import java.util.concurrent.TimeUnit
 
 class K8SDeployPluginTest {
-  private val project = "gradleTestProject"
-
-  @TempDir
-  private lateinit var tempFolder: Path
-
-  private val sandboxDir get() = tempFolder
-
-  @BeforeEach
-  fun setup() {
-    resource(project) copyAllTo sandboxDir
-  }
-
-  fun runBuildTask(task: String): BuildResult = GradleRunner
-    .create()
-    .forwardOutput()
-    .withPluginClasspath()
-    .withArguments(task)
-    .withProjectDir(sandboxDir.toFile())
-    .build()
+  @RegisterExtension
+  val build = GradleProject("gradleTestProject")
 
   @Test
   fun `builds the sample project successfully`() {
@@ -113,7 +92,7 @@ class K8SDeployPluginTest {
         .withName("test")
         .get().spec.template.spec.containers.first().image
     )
-    val result = runBuildTask("build")
+    val result = build.run("build")
 
     assertThat(result.tasks.first().outcome).isEqualTo(TaskOutcome.SUCCESS)
   }
