@@ -17,16 +17,18 @@ import me.stefanozanella.gradle.plugin.k8sdeploy.support.extensions.GradleProjec
 import me.stefanozanella.gradle.plugin.k8sdeploy.support.resource
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 import java.util.concurrent.TimeUnit
 
-class K8SDeployPluginTest {
+@DisplayName("k8s-up task")
+class K8sUpTaskTest {
   @RegisterExtension
   val build = GradleProject("gradleTestProject")
 
   @Test
-  fun `builds the sample project successfully`() {
+  fun `updates the container image for the selected deployment`() {
     val stack = K8sAndRegistryCluster().apply { start() }
 
     Jib
@@ -84,15 +86,16 @@ class K8SDeployPluginTest {
 
     client.apps().deployments().inNamespace("default").withName("test").waitUntilReady(30, TimeUnit.SECONDS)
 
-    println(
-      client
-        .apps()
-        .deployments()
-        .inNamespace("default")
-        .withName("test")
-        .get().spec.template.spec.containers.first().image
-    )
-    val result = build.run("build")
+//    println(
+//      client
+//        .apps()
+//        .deployments()
+//        .inNamespace("default")
+//        .withName("test")
+//        .get().spec.template.spec.containers.first().image
+//    )
+
+    val result = build.run("k8s-up")
 
     assertThat(result.tasks.first().outcome).isEqualTo(TaskOutcome.SUCCESS)
   }
