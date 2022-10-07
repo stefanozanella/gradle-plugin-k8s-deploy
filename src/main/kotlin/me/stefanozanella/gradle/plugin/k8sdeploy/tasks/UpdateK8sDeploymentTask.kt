@@ -6,6 +6,7 @@ import me.stefanozanella.gradle.plugin.k8sdeploy.extensions.KubernetesDeployment
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Nested
 import org.gradle.api.tasks.TaskAction
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 open class UpdateK8sDeploymentTask @Inject constructor(
@@ -14,15 +15,16 @@ open class UpdateK8sDeploymentTask @Inject constructor(
 ) : DefaultTask() {
   @TaskAction
   fun run() {
-    val client = KubernetesClientBuilder().build() //.withConfig(Config.fromKubeconfig(stack.kubeConfigYaml)).build()
+    val k8s = KubernetesClientBuilder().build() //.withConfig(Config.fromKubeconfig(stack.kubeConfigYaml)).build()
 
-    client
+    val deployment = k8s
       .apps()
       .deployments()
       .inNamespace(config.deploymentNamespace.get())
       .withName(config.deploymentName.get())
-      .rolling()
-      .updateImage(mapOf(config.podName.get() to targetImage.toString()))
+
+    deployment.rolling().updateImage(mapOf(config.podName.get() to targetImage.toString()))
+    deployment.waitUntilReady(30, TimeUnit.SECONDS)
 
 //    println(
 //      "Updating K8s pod ${config.podName.get()} for deployment ${config.deploymentName.get()} in namespace ${
