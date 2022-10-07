@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "me.stefanozanella"
-version = "0.0.1"
+version = "0.0.1-SNAPSHOT"
 
 repositories {
   mavenCentral()
@@ -18,7 +18,6 @@ repositories {
 dependencies {
   implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-  implementation("me.stefanozanella:kotlin-gradle-little-helpers:0.0.2")
   implementation("com.google.cloud.tools:jib-gradle-plugin:3.3.0")
   implementation("io.fabric8:kubernetes-client:6.1.1")
   implementation("org.bouncycastle:bcprov-jdk15on:1.70")

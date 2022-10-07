@@ -43,7 +43,7 @@ class K8sUpTaskTest {
       .containerize(
         Containerizer
           .to(
-            RegistryImage.named(ImageReference.of(stack.registryUrl(), "test-app", "latest"))
+            RegistryImage.named(ImageReference.of(stack.registryUrl(), "app-to-override", "latest"))
           )
           .setAllowInsecureRegistries(true)
       )
@@ -58,7 +58,7 @@ class K8sUpTaskTest {
       .resource(
         DeploymentBuilder()
           .withNewMetadata()
-          .withName("test")
+          .withName("new-app")
           .withNamespace("default")
           .endMetadata()
           .withNewSpec()
@@ -73,8 +73,8 @@ class K8sUpTaskTest {
           .withNewSpec()
           .withContainers(
             ContainerBuilder()
-              .withName("test")
-              .withImage("registry:5000/test-app:latest")
+              .withName("new-app")
+              .withImage("registry:5000/app-to-override:latest")
               .build()
           )
           .endSpec()
@@ -84,19 +84,20 @@ class K8sUpTaskTest {
       )
       .create()
 
-    client.apps().deployments().inNamespace("default").withName("test").waitUntilReady(30, TimeUnit.SECONDS)
+    client.apps().deployments().inNamespace("default").withName("new-app").waitUntilReady(30, TimeUnit.SECONDS)
 
-//    println(
-//      client
-//        .apps()
-//        .deployments()
-//        .inNamespace("default")
-//        .withName("test")
-//        .get().spec.template.spec.containers.first().image
-//    )
 
     val result = build.run("k8s-up")
 
     assertThat(result.tasks.first().outcome).isEqualTo(TaskOutcome.SUCCESS)
+
+    assertThat(
+      client
+        .apps()
+        .deployments()
+        .inNamespace("default")
+        .withName("new-app")
+        .get().spec.template.spec.containers.first().image
+    ).isEqualTo("registry:5000/new-app:latest")
   }
 }

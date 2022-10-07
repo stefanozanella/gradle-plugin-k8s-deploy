@@ -75,4 +75,4 @@ The plugin exposes a `kubernetesDeployment` extension with the following propert
 
 * `deploymentName`: name of the deployment to update during rollout. Defaults to `project.name`
 * `podName`: name of the pod to update during rollout. Defaults to `project.name`
-* `baseImageName`: base name of the resulting Docker image that will get deployed. Defaults to `project.name` 
+* `imageName`: base name of the resulting Docker image that will get deployed. Defaults to `project.name` 
