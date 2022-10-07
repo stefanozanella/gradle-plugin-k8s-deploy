@@ -16,14 +16,20 @@ open class UpdateK8sDeploymentTask @Inject constructor(
   fun run() {
     val client = KubernetesClientBuilder().build() //.withConfig(Config.fromKubeconfig(stack.kubeConfigYaml)).build()
 
-//        client.apps().deployments().inNamespace("ns").withName("name").rolling().updateImage(mapOf("container" to "image"))
+    client
+      .apps()
+      .deployments()
+      .inNamespace(config.deploymentNamespace.get())
+      .withName(config.deploymentName.get())
+      .rolling()
+      .updateImage(mapOf(config.podName.get() to targetImage.toString()))
 
-    println(
-      "Updating K8s pod ${config.podName.get()} for deployment ${config.deploymentName.get()} in namespace ${
-        config
-          .deploymentNamespace.get()
-      } with " +
-          "image $targetImage"
-    )
+//    println(
+//      "Updating K8s pod ${config.podName.get()} for deployment ${config.deploymentName.get()} in namespace ${
+//        config
+//          .deploymentNamespace.get()
+//      } with " +
+//          "image $targetImage"
+//    )
   }
 }

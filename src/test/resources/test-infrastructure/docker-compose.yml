@@ -22,10 +22,10 @@ services:
       - ./registries.yaml:/etc/rancher/k3s/registries.yaml
       # This is just so that we get the kubeconfig file out
       - ${K3S_OUTPUT_DIR}:/output
-#    ports:
-#      - 6443:6443  # Kubernetes API Server
-#      - 80:80      # Ingress controller port 80
-#      - 443:443    # Ingress controller port 443
+    ports:
+      - "6443:6443"  # Kubernetes API Server
+      - "80:80"      # Ingress controller port 80
+      - "443:443"    # Ingress controller port 443
   registry:
     image: registry:2.8.1
     ports:
