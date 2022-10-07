@@ -28,7 +28,7 @@ services:
 #      - 443:443    # Ingress controller port 443
   registry:
     image: registry:2.8.1
-#    ports:
-#      - 5002:5000
+    ports:
+      - "5002:5000"
 volumes:
   k3s-server: {}

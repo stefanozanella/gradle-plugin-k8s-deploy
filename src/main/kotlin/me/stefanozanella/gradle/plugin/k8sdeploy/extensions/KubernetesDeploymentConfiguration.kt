@@ -8,7 +8,7 @@ import org.gradle.api.provider.Property
 import org.gradle.kotlin.dsl.property
 import javax.inject.Inject
 
-open class KubernetesDeployment @Inject constructor(
+open class KubernetesDeploymentConfiguration @Inject constructor(
   factory: ObjectFactory,
   project: Project,
 ) {
