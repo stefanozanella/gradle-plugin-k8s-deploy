@@ -15,12 +15,21 @@ class K8sDeployPlugin : Plugin<Project> {
       val config =
         extensions.create(KUBERNETES_DEPLOYMENT_EXTENSION_NAME, KubernetesDeploymentConfiguration::class.java)
 
+      val pushDockerImage = DockerImageRef(
+        config.imageRegistry,
+        config.imageName,
+        config.imageTag,
+      )
+
+      val pullDockerImage = pushDockerImage.copy(registry = config.k8sRegistry)
+
       val dockerImageBuildTask = tasks.named(JibPlugin.BUILD_IMAGE_TASK_NAME, BuildImageTask::class.java)
 
       val deploymentUpdateTask = tasks.register(
         K8S_UPDATE_DEPLOYMENT_TASK_NAME,
         UpdateK8sDeploymentTask::class.java,
-        config
+        config,
+        pullDockerImage,
       ).apply {
         configure {
           mustRunAfter(dockerImageBuildTask)
@@ -37,9 +46,7 @@ class K8sDeployPlugin : Plugin<Project> {
       afterEvaluate {
         extensions.getByType(JibExtension::class.java).apply {
           to {
-            image = listOf(config.registry.get(), config.imageName.get())
-              .filter(String::isNotEmpty)
-              .joinToString("/")
+            image = pushDockerImage.toString()
 
             setAllowInsecureRegistries(true)
           }

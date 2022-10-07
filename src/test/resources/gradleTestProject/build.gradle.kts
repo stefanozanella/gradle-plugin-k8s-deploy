@@ -27,5 +27,6 @@ dependencies {
 
 kubernetesDeployment {
   jvmVersion.set(JavaVersion.VERSION_17)
-  registry.set("localhost:5002")
+  imageRegistry.set("localhost:5002")
+  k8sRegistry.set("registry:5000")
 }
