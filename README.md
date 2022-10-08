@@ -25,9 +25,9 @@ plugins {
 // ...
 
 kubernetesDeployment {
-  deploymentName = "kubedeploy"
-  podName = "kubedeploy"
-  baseImageName = "kubedeploy"
+  deploymentName.set("kubedeploy")
+  podName.set("kubedeploy")
+  baseImageName.set("kubedeploy")
 }
 ```
 
@@ -42,7 +42,7 @@ eval $(minikube docker-env)
 * continuously deploy your project to Minikube
 
 ```shell
-./gradlew -t k8s-up
+./gradlew -t k8sUp
 ```
 
 ## Pre-requisites
@@ -66,13 +66,24 @@ DOCKER_HOST=tcp://127.0.0.1:50193
 ```
 
 ## Configuring the plugin
+
 The plugin exposes a `kubernetesDeployment` extension with the following properties:
 
-* `jvmVersion`: used to determine the version of the base image used to build your container. The plugin 
-  uses [Distroless](https://github.com/GoogleContainerTools/distroless) so the version needs to match one of the 
-  [available Java base images](https://github.com/GoogleContainerTools/distroless/tree/main/java). Defaults to 
-  `project.java.sourceCompatibility`
-
-* `deploymentName`: name of the deployment to update during rollout. Defaults to `project.name`
-* `podName`: name of the pod to update during rollout. Defaults to `project.name`
-* `imageName`: base name of the resulting Docker image that will get deployed. Defaults to `project.name` 
+* `imageName`: base name of the resulting Docker image that will get deployed. Defaults to `project.name`
+* `imageRegistry`: registry that should host the resulting Docker image. The default is empty.
+* `imageTag`: what tag to apply to the resulting Docker image. Defaults to a dynamic "snapshot string" in the form
+  `dev-snapshot-<date timestamp>`.
+* `baseImage`: the Docker base image to build the application upon. Defaults to the Java [Distroless](https://github.
+  com/GoogleContainerTools/distroless) image corresponding to the specified `jvmVersion`.
+* `jvmVersion`: used to determine the version of the base image used to build your container. The plugin
+  uses [Distroless](https://github.com/GoogleContainerTools/distroless) so the version needs to match one of the
+  [available Java base images](https://github.com/GoogleContainerTools/distroless/tree/main/java). Defaults to
+  `project.java.sourceCompatibility`.
+* `deploymentName`: name of the deployment to update during rollout. Defaults to `project.name`.
+* `deploymentNamespace`: namespace where to find the deployment. Defaults to `default`.
+* `podName`: name of the pod to update during rollout. Defaults to `project.name`.
+* `k8sRegistry`: registry from where Kubernetes should pull the application's Docker image. This is available for 
+  the case where, for example, a registry is run within the Kubernetes infrastructure and is accessible via internal 
+  DNS by the control plane, but is available under a different hostname for the client pushing the image. Defaults 
+  to `imageRegistry`. NOTE: In the majority of cases you don't need to set this, and setting `imageRegistry` will 
+  automatically make Kubernetes pull from the same registry.
