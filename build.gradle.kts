@@ -1,11 +1,17 @@
 @file:Suppress("UnstableApiUsage")
 
+import java.net.URL
+
 plugins {
   `java-gradle-plugin`
   `kotlin-dsl`
   kotlin("jvm") version "1.6.21"
   id("com.gradle.plugin-publish") version "1.0.0"
+  id("org.jetbrains.dokka") version "1.7.10"
 }
+
+java.sourceCompatibility = JavaVersion.VERSION_18
+java.targetCompatibility = JavaVersion.VERSION_1_8
 
 group = "me.stefanozanella"
 version = "0.0.1-SNAPSHOT"
@@ -54,4 +60,19 @@ pluginBundle {
   website = "https://github.com/stefanozanella/gradle-plugin-k8s-deploy"
   vcsUrl = "https://github.com/stefanozanella/gradle-plugin-k8s-deploy.git"
   tags = listOf("kubernetes", "docker", "deployment")
+}
+
+tasks.dokkaHtml.configure {
+  outputDirectory.set(buildDir.resolve("docs"))
+
+  dokkaSourceSets {
+    configureEach {
+      sourceLink {
+        localDirectory.set(file("src/main/kotlin"))
+        remoteUrl.set(URL("https://github.com/stefanozanella/${rootProject.name}/blob/master/src/main/kotlin"))
+      }
+
+      jdkVersion.set(java.sourceCompatibility.ordinal)
+    }
+  }
 }
