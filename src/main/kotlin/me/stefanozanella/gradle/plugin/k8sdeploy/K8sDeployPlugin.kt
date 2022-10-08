@@ -1,5 +1,6 @@
 package me.stefanozanella.gradle.plugin.k8sdeploy
 
+import com.google.cloud.tools.jib.gradle.BuildDockerTask
 import com.google.cloud.tools.jib.gradle.BuildImageTask
 import com.google.cloud.tools.jib.gradle.JibExtension
 import com.google.cloud.tools.jib.gradle.JibPlugin
@@ -23,7 +24,8 @@ class K8sDeployPlugin : Plugin<Project> {
 
       val pullDockerImage = pushDockerImage.copy(registry = config.k8sRegistry)
 
-      val dockerImageBuildTask = tasks.named(JibPlugin.BUILD_IMAGE_TASK_NAME, BuildImageTask::class.java)
+      val buildAndPushDockerImage = tasks.named(JibPlugin.BUILD_IMAGE_TASK_NAME, BuildImageTask::class.java)
+      val buildOnlyDockerImage = tasks.named(JibPlugin.BUILD_DOCKER_TASK_NAME, BuildDockerTask::class.java)
 
       val deploymentUpdateTask = tasks.register(
         K8S_UPDATE_DEPLOYMENT_TASK_NAME,
@@ -32,14 +34,16 @@ class K8sDeployPlugin : Plugin<Project> {
         pullDockerImage,
       ).apply {
         configure {
-          mustRunAfter(dockerImageBuildTask)
+          mustRunAfter(buildAndPushDockerImage, buildOnlyDockerImage)
         }
       }
 
       tasks.register(K8S_UP_TASK_NAME) {
+        val buildDockerImage = if (config.pushDockerImage.get()) buildAndPushDockerImage else buildOnlyDockerImage
+
         dependsOn(
           deploymentUpdateTask,
-          dockerImageBuildTask,
+          buildDockerImage,
         )
       }
 

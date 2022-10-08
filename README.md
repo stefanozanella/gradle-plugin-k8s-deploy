@@ -28,6 +28,7 @@ kubernetesDeployment {
   deploymentName.set("kubedeploy")
   podName.set("kubedeploy")
   baseImageName.set("kubedeploy")
+  pushDockerImage.set(false)
 }
 ```
 

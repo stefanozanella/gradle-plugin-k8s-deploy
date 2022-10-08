@@ -23,6 +23,7 @@ open class KubernetesDeploymentConfiguration @Inject constructor(
   val deploymentNamespace: Property<String> = factory.property(String::class.java)
   val podName: Property<String> = factory.property(String::class.java)
   val k8sRegistry: Property<String> = factory.property(String::class.java)
+  val pushDockerImage: Property<Boolean> = factory.property(Boolean::class.java)
 
   init {
     imageName.convention(project.name)
@@ -36,5 +37,6 @@ open class KubernetesDeploymentConfiguration @Inject constructor(
     deploymentNamespace.convention("default")
     podName.convention(project.name)
     k8sRegistry.convention(imageRegistry)
+    pushDockerImage.convention(true)
   }
 }
