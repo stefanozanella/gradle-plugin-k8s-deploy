@@ -73,6 +73,8 @@ tasks.dokkaHtml.configure {
       }
 
       jdkVersion.set(java.sourceCompatibility.ordinal)
+
+      includes.from("docs/index.md")
     }
   }
 }
