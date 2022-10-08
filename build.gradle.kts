@@ -67,9 +67,12 @@ tasks.dokkaHtml.configure {
 
   dokkaSourceSets {
     configureEach {
+      val sourcePath = "src/main/kotlin"
+
       sourceLink {
-        localDirectory.set(file("src/main/kotlin"))
-        remoteUrl.set(URL("https://github.com/stefanozanella/${rootProject.name}/blob/master/src/main/kotlin"))
+        localDirectory.set(file(sourcePath))
+        remoteUrl.set(URL("https://github.com/stefanozanella/${rootProject.name}/blob/master/$sourcePath"))
+        remoteLineSuffix.set("#L")
       }
 
       jdkVersion.set(java.sourceCompatibility.ordinal)
