@@ -5,7 +5,7 @@ import java.net.URL
 plugins {
   `java-gradle-plugin`
   `kotlin-dsl`
-  kotlin("jvm") version "1.6.21"
+  kotlin("jvm") version "1.7.20"
   id("com.gradle.plugin-publish") version "1.0.0"
   id("org.jetbrains.dokka") version "1.7.10"
 }
