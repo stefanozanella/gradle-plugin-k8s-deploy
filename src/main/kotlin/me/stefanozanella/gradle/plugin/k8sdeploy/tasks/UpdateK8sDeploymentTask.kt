@@ -15,7 +15,7 @@ open class UpdateK8sDeploymentTask @Inject constructor(
 ) : DefaultTask() {
   @TaskAction
   fun run() {
-    val k8s = KubernetesClientBuilder().build() //.withConfig(Config.fromKubeconfig(stack.kubeConfigYaml)).build()
+    val k8s = KubernetesClientBuilder().build()
 
     val deployment = k8s
       .apps()
@@ -25,13 +25,5 @@ open class UpdateK8sDeploymentTask @Inject constructor(
 
     deployment.rolling().updateImage(mapOf(config.podName.get() to targetImage.toString()))
     deployment.waitUntilReady(30, TimeUnit.SECONDS)
-
-//    println(
-//      "Updating K8s pod ${config.podName.get()} for deployment ${config.deploymentName.get()} in namespace ${
-//        config
-//          .deploymentNamespace.get()
-//      } with " +
-//          "image $targetImage"
-//    )
   }
 }
