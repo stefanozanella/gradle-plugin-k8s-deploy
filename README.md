@@ -90,3 +90,10 @@ The plugin exposes a `kubernetesDeployment` extension with the following propert
   automatically make Kubernetes pull from the same registry.
 * `pushDockerImage`: should the resulting Docker image be pushed to a registry or not. Useful to set this parameter 
   to `false` when building directly against the Docker daemon. Defaults to `true`.
+
+In addition, it also exposes a `k8s.image.tag` property you can use to override the tag applied to the final 
+image on a build-by-build basis:
+
+```shell
+./gradlew k8sUp -Dk8s.image.tag=mytag
+```

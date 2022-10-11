@@ -24,6 +24,12 @@ class K8sDeployPlugin : Plugin<Project> {
 
       val pullDockerImage = pushDockerImage.copy(registry = config.k8sRegistry)
 
+      (findProperty(K8S_TAG_PROPERTY) as String?)?.let { tag ->
+        if (tag.isNotEmpty()) {
+          config.imageTag.set(tag)
+        }
+      }
+
       val buildAndPushDockerImage = tasks.named(JibPlugin.BUILD_IMAGE_TASK_NAME, BuildImageTask::class.java)
       val buildOnlyDockerImage = tasks.named(JibPlugin.BUILD_DOCKER_TASK_NAME, BuildDockerTask::class.java)
 
