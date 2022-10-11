@@ -14,7 +14,7 @@ java.sourceCompatibility = JavaVersion.VERSION_18
 java.targetCompatibility = JavaVersion.VERSION_1_8
 
 group = "me.stefanozanella"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1"
 
 repositories {
   mavenCentral()
