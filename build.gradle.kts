@@ -7,7 +7,7 @@ plugins {
   `kotlin-dsl`
   kotlin("jvm") version "1.6.21"
   id("com.gradle.plugin-publish") version "1.1.0"
-  id("org.jetbrains.dokka") version "1.7.20"
+  id("org.jetbrains.dokka") version "1.8.10"
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_18
