@@ -31,7 +31,7 @@ dependencies {
   testImplementation("com.google.cloud.tools:jib-core:0.24.0")
   testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.3")
-  testImplementation("org.testcontainers:testcontainers:1.18.0")
+  testImplementation("org.testcontainers:testcontainers:1.18.1")
   testImplementation("org.testcontainers:k3s:1.18.1")
   testImplementation("org.testcontainers:junit-jupiter:1.18.1")
   testImplementation("org.assertj:assertj-core:3.24.2")
