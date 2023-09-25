@@ -24,7 +24,7 @@ repositories {
 dependencies {
   implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-  implementation("com.google.cloud.tools:jib-gradle-plugin:3.3.2")
+  implementation("com.google.cloud.tools:jib-gradle-plugin:3.4.0")
   implementation("io.fabric8:kubernetes-client:6.8.1")
   implementation("org.bouncycastle:bcprov-jdk15on:1.70")
   implementation("org.bouncycastle:bcpkix-jdk15on:1.70")
