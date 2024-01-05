@@ -33,7 +33,7 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.1")
   testImplementation("org.testcontainers:testcontainers:1.19.1")
   testImplementation("org.testcontainers:k3s:1.19.3")
-  testImplementation("org.testcontainers:junit-jupiter:1.19.1")
+  testImplementation("org.testcontainers:junit-jupiter:1.19.3")
   testImplementation("org.assertj:assertj-core:3.25.0")
 }
 
