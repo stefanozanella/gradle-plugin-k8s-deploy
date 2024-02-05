@@ -29,7 +29,7 @@ dependencies {
   implementation("org.bouncycastle:bcprov-jdk15on:1.70")
   implementation("org.bouncycastle:bcpkix-jdk15on:1.70")
   testImplementation("com.google.cloud.tools:jib-core:0.25.0")
-  testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
+  testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.2")
   testImplementation("org.testcontainers:testcontainers:1.19.4")
   testImplementation("org.testcontainers:k3s:1.19.4")
