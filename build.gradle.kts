@@ -28,7 +28,7 @@ dependencies {
   implementation("io.fabric8:kubernetes-client:6.10.0")
   implementation("org.bouncycastle:bcprov-jdk15on:1.70")
   implementation("org.bouncycastle:bcpkix-jdk15on:1.70")
-  testImplementation("com.google.cloud.tools:jib-core:0.25.0")
+  testImplementation("com.google.cloud.tools:jib-core:0.26.0")
   testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.2")
   testImplementation("org.testcontainers:testcontainers:1.19.6")
